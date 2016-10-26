@@ -1,0 +1,141 @@
+
+<!DOCTYPE html>
+<html  ng-app="myapp">
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
+    <script src="/javascripts/l.js"></script>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+   
+</head>
+<body style="background-color: Cyan">
+
+<div class="container"  ng-controller="myctr" novalidate  >
+<h3>Please fill the Patient information </h3>
+<form name="form"  ng-submit = "addpatientlist()" style="width: 30%;height:100%;padding-bottom:200px;float: left;background-color: Cyan">
+  <div class="form-group">
+    <label for="name">Firstname</label>
+    <input type="text" name="firstname" ng-model="contact.firstname" class="form-control" ng-required="true"></input>
+      <span ng-show="form.firstname.$error.required "><small>Firstname is required</small></span>
+
+      
+    
+  </div>
+  <div class="form-group">
+    <label for="name">Lastname</label>
+    <input type="text" name="lastname" ng-model="contact.lastname" class="form-control" ng-required="true"></input>
+      <span ng-show="form.lastname.$error.required "><small>Lastname is required</small></span>   </div>
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input type="email" class="form-control" name="email" ng-model="contact.email" ng-required="true"></input>
+      <span ng-show="form.email.$error.required "><small>Email is required</small></span>
+      <span ng-show="form.email.$error.email"><small>Email is not valid</small></span>
+  </div>
+  <div class="form-group">
+    <label for="mobile number">Mobile number</label>
+    <input type="number" class="form-control" name="mobile" ng-model="contact.mobile"  ng-maxlength="10"  ng-minlength="10" ng-required="true"></input>
+      <span  ng-show="form.mobile.$error.required">
+     Number is required !</span>
+    <span ng-show="form.mobile.$error.number ">
+     Number is not valid !</span>
+      <span ng-show=" form.mobile.$error.maxlength">
+      Number is not valid!</span>
+  </div>
+  
+   <div class="form-group">
+      <label for="gender">Gender</label>
+      <select class="form-control" ng-model="contact.gender" ng-required="true">
+        <option>Male</option>
+        <option>Female</option>
+        <span  ng-show="form.gender.$error.required">
+      Gender is required!</span>
+      </select>
+    </div>
+
+  <div class="form-group">
+    <label for="age">Age</label>
+    <input type="number" class="form-control" name="age" ng-model="contact.age" min="1" max="200" ng-required="true"></input>
+      <span  ng-show="form.age.$error.required">
+      Age is required!</span>
+    <span ng-show="form.age.$error.number">
+      Age is not valid!</span>
+    
+  </div>
+  
+   <div class="form-group">
+    <label for="date">Date of birth</label>
+    <input type="date" class="form-control" name="date" ng-model="contact.date" ng-required="true"></input>
+      <span  ng-show="form.date.$error.required">
+      Date of birth is required</span>
+    <span ng-show="form.date.$error.date">
+      Date of birth is not valid!</span>
+    </div>
+  <div class="form-group">
+    <label for="message">your message</label>
+    <textarea rows="5" class="form-control" name="message" ng-model="contact.message" ng-required="true"></textarea>
+      </div>
+
+     <input type="submit" class="btn btn-primary" ng-disabled="form.$invalid" > </input>
+</form>
+       <div style="margin: 50px 100px 60px 300px; text-align: center;">
+           <b>Search By PatientName<b> :<input type="text" ng-model="name"  ></input></div>
+       <div style="
+      padding-left: 50%;background-color: black  ;color: white;
+      " ng-repeat = "x in patientlist |filter : name">
+      <p>FirstName : {{x.firstname }}</p>
+      <p>LastName  : {{x.lastname}}</p>
+      <p>Email     : {{x.email}}</p>
+      <p>mobile    : {{x.mobile}}</p>
+      <p>Age       : {{x.age}}</p>
+      <p>Gender    : {{x.gender}}</p
+      <p>Date      : {{x.date}}</p>
+      <p>Message   : {{x.message}}</p>
+</div>
+
+ 
+    
+   
+
+ </div>
+ <!-- <h1>Contact list app</h1>
+  <form name="patientform" ng-submit="addcontact()" novalidate> 
+  <table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Number</th>
+       <th>Action</th>
+    </tr>
+  </thead>
+    <tbody>
+    <tr>
+      <td><input class="form-control name="name" "ng-model ="contact.name" ng-required="true"></input></td>
+      <td><input class="form-control name="email" "ng-model ="contact.email" ng-required="true"></input></td>
+      <td><input class="form-control name="number" "ng-model ="contact.number" ng-required="true"></input></td>
+      <button class="btn btn-primary" type="submit">Add</button>
+      <button class="btn btn-primary" ng-click="update()">Update</button>
+      <button class="btn btn-primary" ng-click="deselect ()">Clear</button>
+    </tr>
+      <tr ng-repeat = "x in contactlist">
+        <td>{{x.name}}</td>
+          <td>{{x.email}}</td>
+            <td>{{x.number}}</td>
+                <td>{{x._id}}</td>
+            <td> <button class="btn btn-danger" ng-click="remove(x._id)">Remove</button></td>
+            <td> <button class="btn btn-danger" ng-click="edit(x._id)">Edit</button></td>
+      </tr>
+    </tbody>
+  </table>
+ </form>
+-->
+ 
+</body>
+</html>
+
